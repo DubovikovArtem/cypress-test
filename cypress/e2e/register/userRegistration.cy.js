@@ -5,8 +5,7 @@ describe("Test registration form", () => {
     beforeEach(() => {
         cy.visit("/auth/register");
     });
-    it('test user registration', () => {
-        //cy.visit("/auth/register");
+    it.skip('test user registration', () => {
         cy.get('#input-name').type(fullName)
             .should('have.value', fullName);
         cy.get('#input-email').type(email)
@@ -27,9 +26,29 @@ describe("Test registration form", () => {
         cy.get('form > div.form-control-group.accept-group > nb-checkbox').should('have.attr', 'ng-reflect-model', 'true');
         //проверка что иконки есть
         cy.get('nb-register > section.links > div > a.github.with-icon').should('be.visible');
-        cy.get(' nb-register > section.links > div > a.facebook.with-icon').should('be.visible');
-        cy.get(' nb-register > section.links > div > a.twitter.with-icon').should('be.visible');
+        cy.get('nb-register > section.links > div > a.facebook.with-icon').should('be.visible');
+        cy.get('nb-register > section.links > div > a.twitter.with-icon').should('be.visible');
 
         cy.get('nb-register > form > button').click();
+    });
+
+    it('test user registration', () => {
+        cy.get('nb-register > section.links > div > a.github.with-icon').should('be.visible');
+        cy.get('nb-register > section.links > div > a.facebook.with-icon').should('be.visible');
+        cy.get('nb-register > section.links > div > a.twitter.with-icon').should('be.visible');
+        
+        cy.get('nb-register').within(() => {
+            cy.get('#input-name').type(fullName)
+                .should('have.value', fullName);
+            cy.get('#input-email').type(email)
+                .should('have.value', email);
+            cy.get('#input-password').type(passwd)
+                .should('have.value', passwd);
+            cy.get('#input-re-password').type(passwd)
+                .should('have.value', passwd);
+            cy.get('label > span.custom-checkbox').click();
+            cy.get('form > div.form-control-group.accept-group > nb-checkbox').should('have.attr', 'ng-reflect-model', 'true');
+            cy.get('form > button').click();
+        })
     });
 });
