@@ -1,18 +1,15 @@
 
 let date = ["111", "Artem", "Dubovikov", "@artem", "test@test.test", "23"];
-const ID = "17";
 describe("Test table", () => {
     beforeEach(() => {
         cy.visit("/pages/tables/smart-table");
     });
 
-    it('test find row by ID ', () => {
+    it('test create new row and check it', () => {
         cy.get('thead tr a .nb-plus').click();
         typeValue(date)
-        //cy.get('thead > tr:nth-child(3) > td:nth-child(1) .nb-checkmark').click();
-
         findItemById(date[0]);
-        checkCreatedItem(date);
+        checkCreatedItem(date); 
 
     });
 });
@@ -26,6 +23,11 @@ function typeValue(arr) {
         j++;
     } while (i <= arr.length + 1);
     cy.get('thead > tr:nth-child(3) > td:nth-child(1) .nb-checkmark').click();
+    // or 
+    //    arr.forEach((el, index) => {
+    //     cy.get("table-cell-edit-mode .ng-valid").eq(index).type(el)
+    // })
+    // cy.get('thead > tr:nth-child(3) > td:nth-child(1) .nb-checkmark').click();
 }
 
 function checkCreatedItem(arr) {
@@ -37,6 +39,12 @@ function checkCreatedItem(arr) {
         i++;
         j++;
     } while (i <= arr.length + 1)
+
+    //or
+    // arr.forEach((el, index) => {
+    //     cy.get("table-cell-edit-mode .ng-valid").eq(index).type(el)
+    // })
+    // cy.get('thead > tr:nth-child(3) > td:nth-child(1) .nb-checkmark').click();
 }
 
 function findItemById(id) {
